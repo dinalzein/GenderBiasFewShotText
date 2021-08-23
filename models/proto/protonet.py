@@ -17,6 +17,7 @@ import warnings
 import logging
 from utils.few_shot import create_episode, create_ARSC_test_episode, create_ARSC_train_episode
 from utils.math import euclidean_dist, cosine_similarity
+from sklearn.metrics import f1_score
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -127,14 +128,22 @@ class ProtoNet(nn.Module):
         supervised_loss = CrossEntropyLoss()(-supervised_dists, target_inds.reshape(-1))
         _, y_hat_supervised = (-supervised_dists).max(1)
         acc_val_supervised = torch.eq(y_hat_supervised, target_inds.reshape(-1)).float().mean()
-
+        f1_val = f1_score(
+            target_inds.reshape(-1).cpu().numpy(),
+            y_hat_supervised.cpu().numpy(),
+            average="weighted"
+        )
         if has_augmentations:
             # Unsupervised loss
             unsupervised_target_inds = torch.range(0, n_augmentations_samples - 1).to(device).long()
             unsupervised_loss = CrossEntropyLoss()(-unsupervised_dists, unsupervised_target_inds)
             _, y_hat_unsupervised = (-unsupervised_dists).max(1)
             acc_val_unsupervised = torch.eq(y_hat_unsupervised, unsupervised_target_inds.reshape(-1)).float().mean()
-
+            f1_val_unsupervised = f1_score(
+                unsupervised_target_inds.reshape(-1).cpu().numpy(),
+                y_hat_unsupervised.cpu().numpy(),
+                average="weighted"
+            )
             # Final loss
             assert 0 <= supervised_loss_share <= 1
             final_loss = (supervised_loss_share) * supervised_loss + (1 - supervised_loss_share) * unsupervised_loss
@@ -147,6 +156,8 @@ class ProtoNet(nn.Module):
                     "unsupervised_loss": unsupervised_loss.item(),
                     "supervised_loss_share": supervised_loss_share,
                     "final_loss": final_loss.item(),
+                    "supervised_loss": f1_val,
+                    "unsupervised_f1": f1_val_unsupervised,
                 },
                 "supervised_dists": supervised_dists,
                 "unsupervised_dists": unsupervised_dists,
@@ -157,6 +168,7 @@ class ProtoNet(nn.Module):
             "metrics": {
                 "acc": acc_val_supervised.item(),
                 "loss": supervised_loss.item(),
+                "f1": f1_val,
             },
             "dists": supervised_dists,
             "target": target_inds

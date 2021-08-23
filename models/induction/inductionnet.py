@@ -14,6 +14,7 @@ import torch.nn as nn
 import warnings
 import logging
 from utils.few_shot import create_episode, create_ARSC_train_episode, create_ARSC_test_episode
+from sklearn.metrics import f1_score
 
 logging.basicConfig()
 logger = logging.getLogger(__name__)
@@ -102,11 +103,18 @@ class InductionNet(nn.Module):
         loss_fn = nn.CrossEntropyLoss()
         loss_val = loss_fn(relation_module_scores, true_labels.argmax(1))
         acc_val = (true_labels.argmax(1) == relation_module_scores.argmax(1)).float().mean()
+        f1_val = f1_score(
+            true_labels.argmax(1).cpu().numpy(),
+            relation_module_scores.argmax(1).cpu().numpy(),
+            average="weighted"
+        )
+
         return loss_val, {
             "loss": loss_val.item(),
             "metrics": {
                 "loss": loss_val.item(),
-                "acc": acc_val.item()
+                "acc": acc_val.item(),
+                "f1": f1_val,
             },
             "y_hat": relation_module_scores.argmax(1).cpu().detach().numpy()
         }
