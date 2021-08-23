@@ -2,8 +2,8 @@
 
 for n_class in 5 2 3 4; do
     for seed in 1 2 3 4 5; do
-        for shots in 5; do
-            for dataset in OOS TREC28 Liu; do
+        for shots in 2 6 10 16; do
+            for dataset in original gender-swapped balanced pro-stereotype anti-stereotype; do
 
                 OUTPUT_ROOT="runs/${dataset}/${n_class}C_${shots}K/seed${seed}"
                 data_params="
