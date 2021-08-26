@@ -15,7 +15,7 @@ import torch.nn.functional as torch_functional
 from torch.autograd import Variable
 import warnings
 import logging
-from utils.few_shot import create_episode, create_ARSC_test_episode, create_ARSC_train_episode
+from utils.few_shot import create_ARSC_test_episode, create_ARSC_train_episode
 from utils.math import euclidean_dist, cosine_similarity
 from sklearn.metrics import f1_score
 
@@ -307,7 +307,7 @@ class ProtoNet(nn.Module):
 
         self.eval()
         for i in range(n_episodes):
-            episode = data_loader.create_episode(
+            episode = data_loader.create_gender_balance_episode(
                 n_support=n_support,
                 n_query=n_query,
                 n_unlabeled=n_unlabeled,
@@ -441,7 +441,7 @@ def run_proto(
 
     for step in range(max_iter):
         if not arsc_format:
-            episode = train_data_loader.create_episode(
+            episode = train_data_loader.create_gender_balance_episode(
                 n_support=n_support,
                 n_query=n_query,
                 n_classes=n_classes,

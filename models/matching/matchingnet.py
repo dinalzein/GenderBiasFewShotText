@@ -1,6 +1,6 @@
 import json
 import argparse
-from utils.data import get_jsonl_data
+from utils.data import get_jsonl_data, raw_data_to_labels_dict, raw_data_to_labels_dict_gender
 from utils.python import now, set_seeds
 import random
 import collections
@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 import warnings
 import logging
-from utils.few_shot import create_episode, create_ARSC_train_episode, create_ARSC_test_episode
+from utils.few_shot import create_episode, create_gender_balance_episode, create_ARSC_train_episode, create_ARSC_test_episode
 from utils.math import euclidean_dist, cosine_similarity
 from sklearn.metrics import f1_score
 
@@ -100,7 +100,7 @@ class MatchingNet(nn.Module):
 
     def train_step(self, optimizer, data_dict: Dict[str, List[str]], n_support, n_classes, n_query):
 
-        episode = create_episode(
+        episode = create_gender_balance_episode(
             data_dict=data_dict,
             n_support=n_support,
             n_classes=n_classes,
@@ -120,7 +120,7 @@ class MatchingNet(nn.Module):
         metrics = collections.defaultdict(list)
         self.eval()
         for i in range(n_episodes):
-            episode = create_episode(
+            episode = create_gender_balance_episode(
                 data_dict=data_dict,
                 n_support=n_support,
                 n_classes=n_classes,
@@ -208,15 +208,15 @@ def run_matching(
         test_writer = SummaryWriter(logdir=os.path.join(output_path, "logs/test"), flush_secs=1, max_queue=1)
         log_dict["test"] = list()
 
-    def raw_data_to_labels_dict(data, shuffle=True):
-        labels_dict = collections.defaultdict(list)
-        for item in data:
-            labels_dict[item["label"]].append(item["sentence"])
-        labels_dict = dict(labels_dict)
-        if shuffle:
-            for key, val in labels_dict.items():
-                random.shuffle(val)
-        return labels_dict
+    # def raw_data_to_labels_dict(data, shuffle=True):
+    #     labels_dict = collections.defaultdict(list)
+    #     for item in data:
+    #         labels_dict[item["label"]].append(item["sentence"])
+    #     labels_dict = dict(labels_dict)
+    #     if shuffle:
+    #         for key, val in labels_dict.items():
+    #             random.shuffle(val)
+    #     return labels_dict
 
     # Load model
     bert = BERTEncoder(model_name_or_path).to(device)
@@ -226,19 +226,19 @@ def run_matching(
     # Load data
     if not arsc_format:
         train_data = get_jsonl_data(train_path)
-        train_data_dict = raw_data_to_labels_dict(train_data, shuffle=True)
+        train_data_dict = raw_data_to_labels_dict_gender(train_data, shuffle=True)
         logger.info(f"train labels: {train_data_dict.keys()}")
 
         if valid_path:
             valid_data = get_jsonl_data(valid_path)
-            valid_data_dict = raw_data_to_labels_dict(valid_data, shuffle=True)
+            valid_data_dict = raw_data_to_labels_dict_gender(valid_data, shuffle=True)
             logger.info(f"valid labels: {valid_data_dict.keys()}")
         else:
             valid_data_dict = None
 
         if test_path:
             test_data = get_jsonl_data(test_path)
-            test_data_dict = raw_data_to_labels_dict(test_data, shuffle=True)
+            test_data_dict = raw_data_to_labels_dict_gender(test_data, shuffle=True)
             logger.info(f"test labels: {test_data_dict.keys()}")
         else:
             test_data_dict = None
