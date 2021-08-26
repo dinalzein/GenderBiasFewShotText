@@ -67,6 +67,34 @@ def create_episode(data_dict, n_support, n_classes, n_query, n_unlabeled=0, n_au
 
     return episode
 
+def create_gender_balance_episode(data_dict, n_support, n_classes, n_query, n_unlabeled=0, n_augment=0):
+    gender_keys=['F', 'M']
+    n_classes = min(n_classes, len(data_dict.keys()))
+    rand_keys = np.random.choice(list(data_dict.keys()), n_classes, replace=False)
+    #assert min([len(val) for val in data_dict[key].values() for key in data_dict.keys()]) >= (n_support + n_query + n_unlabeled)/2
+    assert min([ len(val) for key in data_dict.keys() for val in data_dict[key].values()]) >= (n_support + n_query + n_unlabeled)/2
+
+    assert n_support %2==0 and n_query%2==0
+    for key, val in data_dict.items():
+        for key2, val2 in data_dict[key].items():
+            random.shuffle(val2)
+    print(data_dict)
+    episode = {
+        "xs": [
+            [data_dict[k][j][i] for i in range(int(n_support/2)) for j in gender_keys] for k in rand_keys
+        ],
+        "xq": [
+            [data_dict[k][j][int(n_support/2) + i] for i in range(int(n_query/2)) for j in gender_keys] for k in rand_keys
+        ]
+    }
+    print(episode)
+
+    if n_unlabeled:
+        episode['xu'] = [
+            item for k in rand_keys for j in gender_keys for item in data_dict[k][j][n_support + n_query:n_support + n_query + 1]
+        ]
+    return episode
+
 
 def create_ARSC_train_episode(prefix: str = "data/ARSC-Yu/raw", n_support: int = 5, n_query: int = 5, n_unlabeled=0):
     labels = sorted(

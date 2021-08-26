@@ -52,7 +52,7 @@ def get_tsv_data(tsv_path: str, label: str = None):
             })
     return out
 
-
+#just for proto
 def raw_data_to_dict(data, shuffle=True):
     labels_dict = collections.defaultdict(list)
     for item in data:
@@ -61,6 +61,46 @@ def raw_data_to_dict(data, shuffle=True):
     if shuffle:
         for key, val in labels_dict.items():
             random.shuffle(val)
+    return labels_dict
+
+#just for proto
+def raw_data_to_dict_gender(data, shuffle=True):
+    labels_dict = collections.defaultdict(lambda: {"F": [], "M": []})
+    for item in data:
+        if (item["gender"]=="F"):
+            labels_dict[item["label"]]['F'].append(item)
+        elif (item["gender"]=="M"):
+            labels_dict[item["label"]]['M'].append(item)
+    labels_dict = dict(labels_dict)
+    if shuffle:
+        for key, val in labels_dict.items():
+            for key2, val2 in labels_dict[key].items():
+                random.shuffle(val2)
+    return labels_dict
+
+
+def raw_data_to_labels_dict(data, shuffle=True):
+    labels_dict = collections.defaultdict(list)
+    for item in data:
+        labels_dict[item["label"]].append(item["sentence"])
+    labels_dict = dict(labels_dict)
+    if shuffle:
+        for key, val in labels_dict.items():
+            random.shuffle(val)
+    return labels_dict
+
+def raw_data_to_labels_dict_gender(data, shuffle=True):
+    labels_dict = collections.defaultdict(lambda: {"F": [], "M": []})
+    for item in data:
+        if (item["gender"]=="F"):
+            labels_dict[item["label"]]['F'].append(item["sentence"])
+        elif (item["gender"]=="M"):
+            labels_dict[item["label"]]['M'].append(item["sentence"])
+    labels_dict = dict(labels_dict)
+    if shuffle:
+        for key, val in labels_dict.items():
+            for key2, val2 in labels_dict[key].items():
+                random.shuffle(val2)
     return labels_dict
 
 
@@ -97,7 +137,7 @@ class UnlabeledDataLoader:
 class FewShotDataLoader:
     def __init__(self, file_path, unlabeled_file_path: str = None):
         self.raw_data = get_jsonl_data(file_path)
-        self.data_dict = raw_data_to_dict(self.raw_data, shuffle=True)
+        self.data_dict = raw_data_to_dict_gender(self.raw_data, shuffle=True)
         self.unlabeled_file_path = unlabeled_file_path
         if self.unlabeled_file_path:
             self.unlabeled_data_loader = UnlabeledDataLoader(file_path=self.unlabeled_file_path)
@@ -123,5 +163,33 @@ class FewShotDataLoader:
 
         if n_augment:
             episode = dict(**episode, **self.unlabeled_data_loader.create_episode(n_augment=n_augment))
+
+        return episode
+
+
+    def create_gender_balance_episode(self, n_support: int = 0, n_classes: int = 0, n_query: int = 0, n_unlabeled: int = 0, n_augment: int = 0):
+        gender_keys=['F', 'M']
+        episode = dict()
+        if n_classes:
+            n_classes = min(n_classes, len(self.data_dict.keys()))
+            rand_keys = np.random.choice(list(self.data_dict.keys()), n_classes, replace=False)
+
+            assert min([ len(val) for key in self.data_dict.keys() for val in self.data_dict[key].values()]) >= (n_support + n_query + n_unlabeled)/2
+            assert n_support %2==0 and n_query%2==0
+
+            for key, val in self.data_dict.items():
+                for key2, val2 in self.data_dict[key].items():
+                    random.shuffle(val2)
+            if n_support:
+                episode["xs"]=[[self.data_dict[k][j][i] for i in range(int(n_support/2)) for j in gender_keys] for k in rand_keys]
+
+            if n_query:
+                episode["xq"] = [[self.data_dict[k][j][int(n_support/2) + i] for i in range(int(n_query/2)) for j in gender_keys] for k in rand_keys]
+
+            if n_unlabeled:
+                episode['xu'] = [item for k in rand_keys for j in gender_keys for item in self.data_dict[k][j][n_support + n_query:n_support + n_query + 1]]
+
+        #if n_augment:
+        #    episode = dict(**episode, **self.unlabeled_data_loader.create_episode(n_augment=n_augment))
 
         return episode
