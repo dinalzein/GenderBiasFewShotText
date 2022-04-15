@@ -8,8 +8,6 @@ runs*
 runs.bkp
 tmp
 
-# Shell scripts are ignored by default
-**/*.sh
 
 # Jupyter stuff
 notebooks
