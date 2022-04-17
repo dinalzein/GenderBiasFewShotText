@@ -1,8 +1,7 @@
 # Gender Data Substitution
 
+__This repository aims at generating different versions of a given data on the gender level. Given a dataset, it can generate the following augmented datasets:__
 
-## Introduction
-__This repository aims at generating different versions of a given data on the gender level. Given a dataset, it can generate:__
 1. original: represents the initial data before applying any augmentation technique.
 2. gender-swapped: inverts all of the gendered language into the opposite gender, i.e. she ---> he.
 3. balanced: combines both the original data with the gender-swapped one.
@@ -32,7 +31,7 @@ In the [data_utilities](./data_utilities) folder, you can find different json fi
 3. The [neutral_pairs.json](./data/neutral_pairs.json) consists of pairs of words, each pair has a gender word with the corresponding gender free version of it.
 
 ## Datasets
-As we are mainly concerned in gender data, we use both [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv) corpora that can be found in [data_utilities](./data_utilities). Two Jupyter Notebooks are provided to generate the augmented versions in [Introduction](#introduction) of each corpus and will be released in [data](../data) to be used directly for the main project. They can be directly launched in Google Colab from here:
+As we are mainly concerned in gender data, we use both [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv) corpora that can be found in [data_utilities](./data_utilities). Two Jupyter Notebooks are provided to generate the augmented versions of each corpus and will be released in [data](../data) to be used directly for the main project. They can be directly launched in Google Colab from here:
 
 - <a href="https://colab.research.google.com/github/dinalzein/CSC/blob/main/data_substitution_CommonCrawl.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> for the CommonCrawl dataset.  
 
