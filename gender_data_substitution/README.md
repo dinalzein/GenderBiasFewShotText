@@ -25,9 +25,9 @@ python -m spacy download en_core_web_sm
 
 ## Data Utilities
 In the [data_utilities](./data_utilities) folder, you can find different json files that are used to apply gender data substitutions:
-1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names by getting names for both genders from articles 1 and 2 in [Citation](#citation).
+1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names by getting names for both genders from articles 1 and 2 in [Citation](#citation) section.
 
-2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of 252 gendered pairs that include pronouns, nouns, and adjectives. Each pair has a female word with its corresponding male version. The complete list of the gendered words is a combination of previous gender lists from articles 2, 3, and 4 in [Citation](#citation).
+2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of 252 gendered pairs that include pronouns, nouns, and adjectives. Each pair has a female word with its corresponding male version. The complete list of the gendered words is a combination of previous gender lists from articles 2, 3, and 4 in [Citation](#citation) section.
 
 3. The [neutral_pairs.json](./data_utilities/neutral_pairs.json) consists of pairs of words, each pair has a gender word with the corresponding gender free version of it.
 
