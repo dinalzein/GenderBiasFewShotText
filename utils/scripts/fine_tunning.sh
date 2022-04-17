@@ -21,7 +21,6 @@ echo "GPU Devices:"
 gpustat
 
 
-
 model_name=bert-base-cased
 block_size=256
 
