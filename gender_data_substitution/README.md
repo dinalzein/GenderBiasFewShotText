@@ -26,9 +26,9 @@ python -m spacy download en_core_web_sm
 
 ## Data Utilities
 In the [data_utilities](./data_utilities) folder, you can find different json files that are used to apply gender data substitutions:
-1. The [gender_names.json](./data/gender_names.json) consists of x male names and y female names mostly taken from .
-2. The [gender_pairs.json](./data/gender_pairs.json) consisting of pairs of words, each pair has a female word with its corresponding male version. This data is taken from
-3. The [neutral_pairs.json](./data/neutral_pairs.json) consists of pairs of words, each pair has a gender word with the corresponding gender free version of it.
+1. The [gender_names.json](./data_utilities/gender_names.json) consists of x male names and y female names mostly taken from .
+2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of pairs of words, each pair has a female word with its corresponding male version. This data is taken from
+3. The [neutral_pairs.json](./data_utilities/neutral_pairs.json) consists of pairs of words, each pair has a gender word with the corresponding gender free version of it.
 
 ## Datasets
 As we are mainly concerned in gender data, we use both [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv) corpora that can be found in [data_utilities](./data_utilities). Two Jupyter Notebooks are provided to generate the augmented versions of each corpus and will be released in [data](../data) to be used directly for the main project. They can be directly launched in Google Colab from here:
