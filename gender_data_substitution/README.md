@@ -23,11 +23,14 @@ python -m spacy download en_core_web_sm
 ```
 
 
+ we define a dictionary name intervention consisting of $8,065$ \textit{female} and $5,413$ \textit{male} proper names by getting names for both genders
 
 ## Data Utilities
 In the [data_utilities](./data_utilities) folder, you can find different json files that are used to apply gender data substitutions:
-1. The [gender_names.json](./data_utilities/gender_names.json) consists of x male names and y female names mostly taken from .
-2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of pairs of words, each pair has a female word with its corresponding male version. This data is taken from
+1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names by getting names for both genders from articles 1 and 2 in [Citation](#citation).
+
+2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of 252 gendered pairs that include pronouns, nouns, and adjectives. Each pair has a female word with its corresponding male version. The complete list of the gendered words is a combination of previous gender lists from articles 2, 3, and 4 in [Citation](#citation).
+
 3. The [neutral_pairs.json](./data_utilities/neutral_pairs.json) consists of pairs of words, each pair has a gender word with the corresponding gender free version of it.
 
 ## Datasets
@@ -36,6 +39,46 @@ As we are mainly concerned in gender data, we use both [CommonCrawl](https://cit
 - <a href="https://colab.research.google.com/github/dinalzein/CSC/blob/main/data_substitution_CommonCrawl.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> for the CommonCrawl dataset.  
 
 - <a href="https://colab.research.google.com/github/dinalzein/CSC/blob/main/data_substitution_WikipediaGenderEvents.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> for the Wikipedia dataset.
+
+
+## Citation
+
+```bash
+@article{sun2021men,
+  title={Men Are Elected, Women Are Married: Events Gender Bias on Wikipedia},
+  author={Sun, Jiao and Peng, Nanyun},
+  journal={arXiv preprint arXiv:2106.01601},
+  year={2021}
+}
+```
+
+```bash
+@article{maudslay2019s,
+  title={It's All in the Name: Mitigating Gender Bias with Name-Based Counterfactual Data Substitution},
+  author={Maudslay, Rowan Hall and Gonen, Hila and Cotterell, Ryan and Teufel, Simone},
+  journal={arXiv preprint arXiv:1909.00871},
+  year={2019}
+}
+```
+
+```bash
+@article{zhao2018gender,
+  title={Gender bias in coreference resolution: Evaluation and debiasing methods},
+  author={Zhao, Jieyu and Wang, Tianlu and Yatskar, Mark and Ordonez, Vicente and Chang, Kai-Wei},
+  journal={arXiv preprint arXiv:1804.06876},
+  year={2018}
+}
+```
+
+
+```bash
+@article{zhao2018learning,
+  title={Learning gender-neutral word embeddings},
+  author={Zhao, Jieyu and Zhou, Yichao and Li, Zeyu and Wang, Wei and Chang, Kai-Wei},
+  journal={arXiv preprint arXiv:1809.01496},
+  year={2018}
+}
+```
 
 
 ## Used materials and 3rd party code
