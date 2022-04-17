@@ -23,8 +23,6 @@ python -m spacy download en_core_web_sm
 ```
 
 
- we define a dictionary name intervention consisting of $8,065$ \textit{female} and $5,413$ \textit{male} proper names by getting names for both genders
-
 ## Data Utilities
 In the [data_utilities](./data_utilities) folder, you can find different json files that are used to apply gender data substitutions:
 1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names by getting names for both genders from articles 1 and 2 in [Citation](#citation).
