@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd $HOME/Projects/FewShotText
+cd $HOME/Projects/GenderBiasFewShotText
 source .venv/bin/activate
 source .envrc
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"

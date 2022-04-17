@@ -78,7 +78,6 @@ def create_gender_balance_episode(data_dict, n_support, n_classes, n_query, n_un
     for key, val in data_dict.items():
         for key2, val2 in data_dict[key].items():
             random.shuffle(val2)
-    print(data_dict)
     episode = {
         "xs": [
             [data_dict[k][j][i] for i in range(int(n_support/2)) for j in gender_keys] for k in rand_keys
@@ -87,8 +86,6 @@ def create_gender_balance_episode(data_dict, n_support, n_classes, n_query, n_un
             [data_dict[k][j][int(n_support/2) + i] for i in range(int(n_query/2)) for j in gender_keys] for k in rand_keys
         ]
     }
-    print(episode)
-
     if n_unlabeled:
         episode['xu'] = [
             item for k in rand_keys for j in gender_keys for item in data_dict[k][j][n_support + n_query:n_support + n_query + 1]
