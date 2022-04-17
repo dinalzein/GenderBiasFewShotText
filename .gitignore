@@ -16,7 +16,3 @@ notebooks
 # Spreadsheet stuff
 **/*.ods
 **/*.xlsx
-
-# Ignore data by default
-data
-**/*.zip
