@@ -74,7 +74,7 @@ def create_gender_balance_episode(data_dict, n_support, n_classes, n_query, n_un
     #assert min([len(val) for val in data_dict[key].values() for key in data_dict.keys()]) >= (n_support + n_query + n_unlabeled)/2
     assert min([ len(val) for key in data_dict.keys() for val in data_dict[key].values()]) >= (n_support + n_query + n_unlabeled)/2
 
-    assert n_support %2==0 and n_query%2==0
+    #assert n_support %2==0 and n_query%2==0
     for key, val in data_dict.items():
         for key2, val2 in data_dict[key].items():
             random.shuffle(val2)
