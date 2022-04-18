@@ -175,7 +175,7 @@ class FewShotDataLoader:
             rand_keys = np.random.choice(list(self.data_dict.keys()), n_classes, replace=False)
 
             assert min([ len(val) for key in self.data_dict.keys() for val in self.data_dict[key].values()]) >= (n_support + n_query + n_unlabeled)/2
-            assert n_support %2==0 and n_query%2==0
+            #assert n_support %2==0 and n_query%2==0
 
             for key, val in self.data_dict.items():
                 for key2, val2 in self.data_dict[key].items():
