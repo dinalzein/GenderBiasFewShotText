@@ -39,7 +39,7 @@ As we are mainly concerned in gender data, we use both [CommonCrawl](https://cit
 - <a href="https://colab.research.google.com/github/dinalzein/CSC/blob/main/data_substitution_WikipediaGenderEvents.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> for the Wikipedia dataset.
 
 
-## Citation
+### Citation
 
 ```bash
 @article{sun2021men,
