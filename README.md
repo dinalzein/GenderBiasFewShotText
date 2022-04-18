@@ -8,7 +8,7 @@ In few-shot classification for NLP tasks, we are interested in learning a classi
 A [report](./report.pdf) has been made to explain in details the work has been done and the few-shot models used to evaluate our strategies on.
 
 ## Datasets
-We are using two different datasets [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv). To get the augmented versions of each dataset, run the jupyter notebooks [data_substitution_CommonCrawl](./generate_gender_flipped_data/src/data_substitution_CommonCrawl.ipynb) and [data_substitution_WikipediaGenderEvents](./generate_gender_flipped_data/src/data_substitution_WikipediaGenderEvents.ipynb) in the directory stored in. After executing these notebooks, the different augmented versions of each corpus will be asserted in [data](./data). For more information on these notebooks, please refer to [README.md](./generate_gender_flipped_data/README.md).
+We are using two different datasets [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv). To get the augmented versions of each dataset, run the jupyter notebooks [data_substitution_CommonCrawl](./gender_data_substitution/src/data_substitution_CommonCrawl.ipynb) and [data_substitution_WikipediaGenderEvents](./gender_data_substitution/src/data_substitution_WikipediaGenderEvents.ipynb) in the directory stored in. After executing these notebooks, the different augmented versions of each corpus will be asserted in [data](./data). For more information on these notebooks, please refer to [README.md](./gender_data_substitution/README.md).
 
 
 ## Environment setup
@@ -24,12 +24,12 @@ source .venv/bin/activate
 ```
 
 ## Fine-tuning BERT on the MLM task
-To fine-tune BERT on the [CommonCrawl](./data) and [Wikipedia](./data) datasets, simply run:
+To fine-tune BERT on the datasets in [Datasets](#datasets), run:
 ```Bash
 utils/scripts/fine_tunning.sh
 ```
 ## Training a few-shot model
-To run the the few-shot networks, simply run:
+To run the the few-shot networks on the datasets in [Datasets](#datasets), simply run:
 ```Bash
 utils/scripts/training_models.sh
 ```
