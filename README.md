@@ -1,5 +1,15 @@
-# FewShotText
-This repository contains code for the paper [A Neural Few-Shot Text Classification Reality Check](https://arxiv.org/abs/2101.12073)
+# Gender Bias Few-shot Text
+This repository is forked from [FewShotText](https://github.com/tdopierre/FewShotText) and is coming along with the paper cited in the [Citation](#citation) section. It aims at adding methods to mitigate gender bias in few-shot text models when dealing with gender based datasets.
+
+
+## Introdcution
+In few-shot classification for NLP tasks, we are interested in learning a classifier to recognize classes which were not seen at training time, provided only a handful of labeled examples in the inference regime. To do so, significant progress in few-shot classification has featured meta-learning, a parameterized model for learning algorithm, that is trained on episodes, each corresponding to a different classification mini-task -- each episodes comes with a small labeled support set and query set. Although these NLP models have shown success in classification tasks, they are based on a handful of labeled data so that they are prone to propagate all kind of bias found in language models. In this work we focus on gender bias found in text corpora. Few-shot NLP models use a pre-trained Transformer neural network to get an embedding representation of text samples that, unless addressed, are prone to learn intrinsic gender-bias in the dataset. We present different approaches that have shown success in quantifying and mitigating gender-bias in the transformer models. From these approaches, we propose different methods to quantify and mitigate bias in meta-learning for NLP tasks.
+
+A [report](./report.pdf) has been made to explain in details the work has been done and the few-shot models used to evaluate our strategies on.
+
+## Datasets
+We are using two different datasets [CommonCrawl](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.646.4837&rep=rep1&type=pdf) and [WikipediaGenderEvents](https://github.com/PlusLabNLP/ee-wiki-bias/blob/master/data/final_manual.csv). To get the augmented versions of each dataset, run the jupyter notebooks [data_substitution_CommonCrawl](./generate_gender_flipped_data/src/data_substitution_CommonCrawl.ipynb) and [data_substitution_WikipediaGenderEvents](./generate_gender_flipped_data/src/data_substitution_WikipediaGenderEvents.ipynb) in the directory stored in. After executing these notebooks, the different augmented versions of each corpus will be asserted in [data](./data). For more information on these notebooks, please refer to [README.md](./generate_gender_flipped_data/README.md).
+
 
 ## Environment setup
 ```bash
@@ -14,37 +24,18 @@ source .venv/bin/activate
 ```
 
 ## Fine-tuning BERT on the MLM task
-```bash
-model_name=bert-base-cased
-block_size=256
-dataset=OOS
-output_dir=transformer_models/${dataset}/fine-tuned
-
-python language_modeling/run_language_modeling.py \
-        --model_name_or_path ${model_name} \
-        --output_dir ${output_dir} \
-        --mlm \
-        --do_train \
-        --train_data_file data/${dataset}/full/full-train.txt  \
-        --do_eval \
-        --eval_data_file data/${dataset}/full/full-test.txt \
-        --overwrite_output_dir \
-        --logging_steps=1000 \
-        --line_by_line \
-        --logging_dir ${output_dir} \
-        --block_size ${block_size} \
-        --save_steps=1000 \
-        --num_train_epochs 20 \
-        --save_total_limit 20 \
-        --seed 42 \
-        --evaluation_strategy epoch
+To fine-tune BERT on the [CommonCrawl](./data) and [Wikipedia](./data) datasets, simply run:
+```Bash
+utils/scripts/fine_tunning.sh
+```
+## Training a few-shot model
+To run the the few-shot networks, simply run:
+```Bash
+utils/scripts/training_models.sh
 ```
 
-## Training a few-shot model
-To run the paper's experiments, simply use the ```utils/scripts/runner.sh``` file. 
-
-## Reference
-If you use the data or codes in this repository, please cite our paper:
+### Citation
+To cite this work in your publications
 ```bash
 @article{dopierre2021neural,
     title={A Neural Few-Shot Text Classification Reality Check},
