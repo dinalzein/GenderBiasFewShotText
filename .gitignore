@@ -16,3 +16,7 @@ notebooks
 # Spreadsheet stuff
 **/*.ods
 **/*.xlsx
+
+data
+**/*.zip
+
