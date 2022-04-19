@@ -25,7 +25,7 @@ python -m spacy download en_core_web_sm
 
 ## Data Utilities
 In the [data_utilities](./data_utilities) folder, you can find different json files that are used to apply gender data substitutions:
-1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names by getting names for both genders from articles 1 and 2 in [Citation](#citation) section.
+1. The [gender_names.json](./data_utilities/gender_names.json) is a dictionary name intervention consisting of 8,065 female and 5,413 male proper names. The gender names are taken from articles 1 and 2 in [Citation](#citation) section.
 
 2. The [gender_pairs.json](./data_utilities/gender_pairs.json) consisting of 252 gendered pairs that include pronouns, nouns, and adjectives. Each pair has a female word with its corresponding male version. The complete list of the gendered words is a combination of previous gender lists from articles 2, 3, and 4 in [Citation](#citation) section.
 
@@ -81,3 +81,4 @@ As we are mainly concerned in gender data, we use both [CommonCrawl](https://cit
 
 ### Used materials and 3rd party code
 Part of the code is taken from [Counterfactual Data Substitution](https://github.com/rowanhm/counterfactual-data-substitution) repository.
+Part of the data is taken from [WinoBias](https://github.com/uclanlp/corefBias/tree/master/WinoBias/wino), [gn_glove](https://github.com/uclanlp/gn_glove/tree/master/wordlist), and [ee-wiki-bias](https://github.com/PlusLabNLP/ee-wiki-bias). 
