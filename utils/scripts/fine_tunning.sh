@@ -1,23 +1,4 @@
 #!/usr/bin/env bash
-#SBATCH -n 1
-#SBATCH -p GPU
-#SBATCH -J fine_tunning
-#SBATCH -o fine_tunning.log
-#SBATCH --gres=gpu:1
-#SBATCH --exclude=calcul-gpu-lahc-2
-source /home_expes/tools/python/python3_gpu
-
-# Create environment
-python3 -m virtualenv .venv --python=python3.6
-
-# Install environment
-.venv/bin/pip install -r requirements.txt
-
-# Activate environment
-source .venv/bin/activate
-
-echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"
-
 model_name=bert-base-cased
 
 block_size=264
