@@ -17,7 +17,6 @@ python3 -m virtualenv .venv --python=python3.6
 source .venv/bin/activate
 
 echo "CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES}"
-echo "GPU Devices:"
 
 model_name=bert-base-cased
 
