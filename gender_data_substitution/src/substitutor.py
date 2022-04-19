@@ -1,6 +1,5 @@
 import logging
 import random
-import c
 import sys
 import json
 import spacy
