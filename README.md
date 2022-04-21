@@ -35,7 +35,7 @@ utils/scripts/training_models.sh
 ```
 
 ### Citation
-To cite this work in your publications
+To cite this work in your publications:
 ```bash
 @article{dopierre2021neural,
     title={A Neural Few-Shot Text Classification Reality Check},
